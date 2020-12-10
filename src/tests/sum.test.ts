@@ -1,13 +1,15 @@
-
-const MyMock = jest.fn();
-
-MyMock.mockReturnValueOnce(2).mockReturnValueOnce(2)
-
+class BooleanReturnTrue {
+    isTrue (){
+      return true
+    }
+  }
 describe("should be equal", () => {
-    test("should make x some sum", () => {
-        expect( MyMock(2)).toBe(2)
+    const booleanReturnTrue = new BooleanReturnTrue()
+    jest.spyOn(booleanReturnTrue, 'isTrue').mockReturnValueOnce(false)
+    test("one function that should fail", () => {
+        expect(booleanReturnTrue.isTrue()).toBe(false)
     })
-        test("should make some sum", () => {
-        expect( MyMock(4)).toBe(2)
+        test("one function that should not fail", () => {
+        expect(booleanReturnTrue.isTrue()).toBe(true)
     })
 })
