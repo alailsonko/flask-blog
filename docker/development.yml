@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  db:
+    image: postgres
+    enviroment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    posts:
+      - "${POSTGRES_POST}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  web:
+    build:
+      context: ${PWD}
+      dockerfile: docker/Dockerfile
+    environment:
+      FLASK_ENV: ${FLASK_ENV}
+      FLASK_CONFIG: ${FLASK_CONFIG}
+    command: flask run --host 0.0.0.0
+    volumes:
+      - ${PWD}:/opt/code
+    ports:
+      - "5000:5000"
+
+volumes:
+  pgdata:
