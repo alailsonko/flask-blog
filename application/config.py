@@ -10,9 +10,8 @@ class Config(object):
     hostname = os.environ["POSTGRES_HOST"]
     port = os.environ["POSTGRES_PORT"]
     database = os.environ["APPLICATION_DB"]
-    SQLALCHEMY_DATABASE_URI = (
-        f"postgresql+psycopg2://{user}:{password}@{hostname}:{port}/{database}",
-    )
+    DBURI = f"postgresql+psycopg2://{user}:{password}@{hostname}:{port}/{database}"
+    SQLALCHEMY_DATABASE_URI = DBURI
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
