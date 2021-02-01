@@ -1,27 +1,11 @@
-from flask import Flask
-from application.models import User
+def initialize_app(config_name):
 
+    from .routes.auth import auth_routes
+    from .create_app.app import create_app
+    app = create_app(config_name)
+    routes = [auth_routes]
 
-def create_app(config_name):
-
-    app = Flask(__name__)
-
-    config_module = f"application.config.{config_name.capitalize()}Config"
-
-    app.config.from_object(config_module)
-
-    from application.models import db, migrate
-
-    db.init_app(app)
-    migrate.init_app(app, db)
-
-    @app.route("/")
-    def hello_world():
-        return "Hello, World!"
-
-    @app.route("/users")
-    def users():
-        num_users = User.query.count()
-        return f"Number of users: {num_users}"
+    for route in routes:
+        app = route(app)
 
     return app

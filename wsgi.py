@@ -1,5 +1,5 @@
 import os
 
-from application.app import create_app
+from application.app import initialize_app
 
-app = create_app(os.environ["FLASK_CONFIG"])
+app = initialize_app(os.environ["FLASK_CONFIG"])

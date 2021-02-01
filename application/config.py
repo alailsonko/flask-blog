@@ -8,6 +8,7 @@ class Config(object):
     user = os.environ["POSTGRES_USER"]
     password = os.environ["POSTGRES_PASSWORD"]
     hostname = os.environ["POSTGRES_HOST"]
+    print('from print', hostname)
     port = os.environ["POSTGRES_PORT"]
     database = os.environ["APPLICATION_DB"]
     DBURI = f"postgresql+psycopg2://{user}:{password}@{hostname}:{port}/{database}"
