@@ -12,12 +12,19 @@ class MissingParamError:
         self.StatusMessage = f'{StatusMessage} is required'
 
 
+class BadRequestError:
+    def __init__(self, StatusMessage, StatusCode):
+        self.StatusCode = StatusCode
+        self.StatusMessage = StatusMessage
+
+
 class SignUpController:
-    def __init__(self, req):
+    def __init__(self, req, EmailValidator):
         self.username = req.username
         self.email = req.email
         self.password = req.password
         self.passwordConfirm = req.passwordConfirm
+        self.EmailValidator = EmailValidator
 
     def handle(self):
         fields = [{'key':self.username,'value': 'username'},
@@ -28,3 +35,16 @@ class SignUpController:
             if field['key'] == '' or field['key'] is None:
                 value = field['value']
                 return MissingParamError(value, 400)
+        if self.password != self.passwordConfirm:
+            return BadRequestError(
+                'password and password confirmation must match',
+                401
+            )
+
+        isEmail = self.EmailValidator(self.email)
+
+        if isEmail.isValid() is False:
+            return BadRequestError(
+                'email must be a valid email',
+                401
+            )
