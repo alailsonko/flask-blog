@@ -1,13 +1,13 @@
 import pytest
 
 
-from application.app import create_app
+from application.app import initialize_app
 from application.models import db
 
 
 @pytest.fixture
 def app():
-    app = create_app("testing")
+    app = initialize_app("testing")
 
     return app
 

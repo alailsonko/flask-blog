@@ -1,7 +1,12 @@
+from flask import request
+
+
 def auth_routes(app):
 
     @app.route('/signup', methods=['POST'])
     def signup():
-        return {'message': 'working'}
+        print(request.json['message'])
+
+        return (request.json, 404)
 
     return app
