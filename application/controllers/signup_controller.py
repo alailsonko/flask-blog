@@ -9,7 +9,7 @@ class AddAccount:
 class MissingParamError:
     def __init__(self, StatusMessage, StatusCode):
         self.StatusCode = StatusCode
-        self.StatusMessage = StatusMessage
+        self.StatusMessage = f'{StatusMessage} is required'
 
 
 class SignUpController:
@@ -20,11 +20,11 @@ class SignUpController:
         self.passwordConfirm = req.passwordConfirm
 
     def handle(self):
-        if self.username == '' or self.username is None:
-            return MissingParamError('username is required', 400)
-        if self.email == '' or self.email is None:
-            return MissingParamError('email is required', 400)
-        if self.password == '' or self.password is None:
-            return MissingParamError('password is required', 400)
-        if self.passwordConfirm == '' or self.passwordConfirm is None:
-            return MissingParamError('passwordConfirm is required', 400)
+        fields = [{'key':self.username,'value': 'username'},
+                  {'key':self.email,'value': 'email'},
+                  {'key':self.password,'value': 'password'},
+                  {'key':self.passwordConfirm,'value': 'passwordConfirm'}]
+        for field in fields:
+            if field['key'] == '' or field['key'] is None:
+                value = field['value']
+                return MissingParamError(value, 400)
