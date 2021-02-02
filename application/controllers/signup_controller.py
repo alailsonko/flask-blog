@@ -20,28 +20,28 @@ class BadRequestError:
 
 class SignUpController:
     def __init__(self, req, EmailValidator):
-        self.username = req.username
-        self.email = req.email
-        self.password = req.password
-        self.passwordConfirm = req.passwordConfirm
-        self.EmailValidator = EmailValidator
+        self.__username = req.username
+        self.__email = req.email
+        self.__password = req.password
+        self.__passwordConfirm = req.passwordConfirm
+        self.__EmailValidator = EmailValidator
 
     def handle(self):
-        fields = [{'key':self.username,'value': 'username'},
-                  {'key':self.email,'value': 'email'},
-                  {'key':self.password,'value': 'password'},
-                  {'key':self.passwordConfirm,'value': 'passwordConfirm'}]
+        fields = [{'key':self.__username,'value': 'username'},
+                  {'key':self.__email,'value': 'email'},
+                  {'key':self.__password,'value': 'password'},
+                  {'key':self.__passwordConfirm,'value': 'passwordConfirm'}]
         for field in fields:
             if field['key'] == '' or field['key'] is None:
                 value = field['value']
                 return MissingParamError(value, 400)
-        if self.password != self.passwordConfirm:
+        if self.__password != self.__passwordConfirm:
             return BadRequestError(
                 'password and password confirmation must match',
                 401
             )
 
-        isEmail = self.EmailValidator(self.email)
+        isEmail = self.__EmailValidator(self.__email)
 
         if isEmail.isValid() is False:
             return BadRequestError(
