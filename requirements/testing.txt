@@ -4,3 +4,4 @@ pytest
 coverage
 pytest-cov
 pytest-flask
+pytest-mock
